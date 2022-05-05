@@ -219,6 +219,7 @@ public:
   {
     ungets.push_back(ungot);
   }
+
   got getWithComments()
   {
     if (!ungets.empty())
@@ -261,11 +262,22 @@ public:
 //--------------------added-------------------------
   void skipComments()
   {
-    got g = getWithComments();
-    if (g.ch == '#')
-    {
-      //get to the end of line
+    while(eof == false){
+      got g = getWithComments();
+      if (g.ch == '#')
+      {
+        //get to the end of line
+        ++line;
+        col = 0;
+      }
+      if (g.ch == '{')
+      {
+        ++col;
+        
+      }
+      
     }
+    
   }
 //--------------------------------------------------
   virtual Token::Ptr nextFromStream() override
@@ -288,10 +300,6 @@ public:
       return Token::lparen(g.line, g.col);
     if (g.ch == ')')
       return Token::rparen(g.line, g.col);
-    //--------------changes------------------
-    if (g.ch == 'X')
-      return Token::comment(g.line, g.col);
-    //---------------------------------------
     if (g.ch >= '0' && g.ch <= '9')
     {
       std::string strnum;
