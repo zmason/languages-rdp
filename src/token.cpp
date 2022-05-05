@@ -24,6 +24,7 @@ TokenType JSONToTokenType(const std::string &jsonTokenType) {
   if (jsonTokenType == "keyword") return TokenType::keyword;
   if (jsonTokenType == "number") return TokenType::number;
   if (jsonTokenType == "add") return TokenType::add;
+ 
   if (jsonTokenType == "sub") return TokenType::sub;
   if (jsonTokenType == "divide") return TokenType::divide;
   if (jsonTokenType == "times") return TokenType::times;
