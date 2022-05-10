@@ -263,15 +263,16 @@ public:
   void skipComments()
   {
       got c = get();
-      if(eof != false)
+      if(eof == false)
       {  
+        //single line comment
         if (c.ch == '#')
         {
           //get to the end of line
           ++line;
           col = 0;
         }
-
+        //Nested comments
         if (c.ch == '{')
         {
           while(c.ch != '}')
