@@ -260,9 +260,8 @@ public:
     return ans;
   }
 //--------------------added-------------------------
-  void skipComments()
+  void skipComments(got c)
   {
-      got c = get();
       if(eof == false)
       {  
         //single line comment
@@ -279,7 +278,7 @@ public:
           {
             got c = get();
             ++col;
-            if (ch == '\n')
+            if (c.ch == '\n')
             {
               ++line;
               col = 0;
@@ -287,14 +286,12 @@ public:
           }
         }
       }
-    
-    
   }
 //--------------------------------------------------
   virtual Token::Ptr nextFromStream() override
   {
-    skipComments();/////////////////////////////////
     got g = get();
+    skipComments(g);/////////////////////////////////
     if (g.ch >= 'a' && g.ch <= 'z')
       return Token::identifier(std::string(1, char(g.ch)), g.line, g.col);
     if (g.ch == 'S' || g.ch == 'R')
