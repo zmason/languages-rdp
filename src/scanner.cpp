@@ -220,7 +220,7 @@ public:
     ungets.push_back(ungot);
   }
 
-  got getWithComments()
+  got get()
   {
     if (!ungets.empty())
     {
@@ -262,21 +262,31 @@ public:
 //--------------------added-------------------------
   void skipComments()
   {
-    while(eof == false){
-      got g = getWithComments();
-      if (g.ch == '#')
-      {
-        //get to the end of line
-        ++line;
-        col = 0;
+      got c = get();
+      if(eof != false)
+      {  
+        if (c.ch == '#')
+        {
+          //get to the end of line
+          ++line;
+          col = 0;
+        }
+
+        if (c.ch == '{')
+        {
+          while(c.ch != '}')
+          {
+            got c = get();
+            ++col;
+            if (ch == '\n')
+            {
+              ++line;
+              col = 0;
+            }
+          }
+        }
       }
-      if (g.ch == '{')
-      {
-        ++col;
-        
-      }
-      
-    }
+    
     
   }
 //--------------------------------------------------
